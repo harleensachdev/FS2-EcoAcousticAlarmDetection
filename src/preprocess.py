@@ -101,12 +101,20 @@ def getmetadata():
         'train/alarm': 'alarm',
         'train/non_alarm': 'non_alarm',
         'train/background': 'background',
+        'train/highfreq_noise': 'highfreq_noise',
+        'train/insect_call': "insect_call",
+        "train/weather_rain": "weather_rain",
+        "train/lowfreq_noise": "lowfreq_noise",
         'validation/alarm': 'alarm',
         'validation/non_alarm': 'non_alarm', 
         'validation/background': 'background',
         'test/alarm': 'alarm',
         'test/non_alarm': 'non_alarm',
-        'test/background': 'background'
+        'test/background': 'background',
+        'test/highfreq_noise': 'highfreq_noise',
+        'test/insect_call': "insect_call",
+        "test/weather_rain": "weather_rain",
+        "test/lowfreq_noise": "lowfreq_noise",
     }
 
     # Process new files with progress bar
@@ -179,7 +187,7 @@ def getexperimentdata():
         print("Creating a new experiment file")
         experiment_data_df = pd.DataFrame(columns=[
             'file_path', 'site', 'date', 'time', 
-            'alarm_count', 'non_alarm_count', 'background_count',
+            'alarm_count', 'non_alarm_count', 'background_count', 'highfreq_noise_count', 'insect_call_count', 'weather_rain_count', 'lowfreq_noise_count'
             'spectrogram_paths', 'processed'
         ])
         experiment_data_df.to_csv(EVALUATEDATAPATH, index=False)
@@ -232,6 +240,10 @@ def getexperimentdata():
                     'alarm_count': 0,
                     'non_alarm_count': 0,
                     'background_count': 0,
+                    'highfreq_noise_count':0,
+                    'insect_call_count':0,
+                    "weather_rain_count" : 0,
+                    "lowfreq_noise_count": 0,
                     'spectrogram_paths': ','.join(segment_paths),
                     'processed': True  # Mark as processed since we've created the spectrograms
                 })
@@ -245,6 +257,10 @@ def getexperimentdata():
                     'alarm_count': 0,
                     'non_alarm_count': 0,
                     'background_count': 0,
+                    'highfreq_noise_count':0,
+                    'insect_call_count':0,
+                    "weather_rain_count" : 0,
+                    "lowfreq_noise_count": 0,
                     'spectrogram_paths': '',
                     'processed': False  # Mark as not processed since we couldn't generate segments
                 })
@@ -339,7 +355,7 @@ def create_all_spectrograms(force_recreate=False):
             print(f"Warning: {EVALUATEDATAPATH} was empty. Creating new DataFrame.")
             experiment_df = pd.DataFrame(columns=[
                 'file_path', 'site', 'date', 'time', 
-                'alarm_count', 'non_alarm_count', 'background_count',
+                'alarm_count', 'non_alarm_count', 'background_count', 'highfreq_noise_count', 'insect_call_count', 'weather_rain_count', 'lowfreq_noise_count'
                 'spectrogram_paths', 'processed'
             ])
             experiment_df.to_csv(EVALUATEDATAPATH, index=False)
